@@ -1,0 +1,15 @@
+tracepoint:raw_syscalls:sys_enter
+{
+    printf("{\"type\":\"sys_enter\",\"pid\":%d,\"ts\":%lld}\n", pid, nsecs);
+}
+
+tracepoint:raw_syscalls:sys_exit
+{
+    printf("{\"type\":\"sys_exit\",\"pid\":%d,\"ts\":%lld}\n", pid, nsecs);
+}
+
+tracepoint:sched:sched_switch
+{
+    printf("{\"type\":\"switch_out\",\"pid\":%d,\"ts\":%lld}\n", args->prev_pid, nsecs);
+    printf("{\"type\":\"switch_in\",\"pid\":%d,\"ts\":%lld}\n", args->next_pid, nsecs);
+}
